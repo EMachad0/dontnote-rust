@@ -1,10 +1,12 @@
 mod graphql;
 mod database;
+mod auth;
 
 use async_graphql::http::GraphiQLSource;
 use async_graphql_warp::{GraphQLBadRequest, GraphQLResponse};
 use http::StatusCode;
 use std::convert::Infallible;
+use async_graphql::GuardExt;
 use warp::http::response as HttpResponse;
 use warp::{Filter, Rejection};
 
