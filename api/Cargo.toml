@@ -7,9 +7,9 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
-warp = "0.3"
+axum = "0.6.19"
 async-graphql = { version = "5.0.10", features = ["tokio", "uuid"] }
-async-graphql-warp = "5.0.10"
+async-graphql-axum = "5.0.10"
 anyhow = "1.0.72"
 thiserror = "1.0.44"
 biscuit = "0.6.0"

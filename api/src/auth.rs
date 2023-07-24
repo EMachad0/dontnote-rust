@@ -92,8 +92,6 @@ impl AuthSubject {
 }
 
 mod filters {
-    use warp::Filter;
-
     // pub fn with_auth(
         // jwks: &'static JWKS,
     // ) -> impl Filter<Extract = (Subject,), Error = Rejection> + Clone {
