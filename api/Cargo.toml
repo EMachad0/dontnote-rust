@@ -13,8 +13,9 @@ async-graphql-warp = "5.0.10"
 anyhow = "1.0.72"
 thiserror = "1.0.44"
 biscuit = "0.6.0"
-uuid = "1.4.1"
+uuid = { version = "1.4.1", features = ["v4"] }
 http = "0.2.9"
 tracing = "0.1.37"
-sea-orm = { version = "0.11.0", features = ["sqlx-sqlite", "runtime-tokio-rustls", "macros", "with-uuid"] }
+sea-orm = { version = "0.11.3", features = ["sqlx-sqlite", "runtime-tokio-rustls", "macros", "with-uuid"] }
 futures = "0.3.28"
+entity = { path = "../entity" }

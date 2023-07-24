@@ -1,4 +1,5 @@
 mod graphql;
+mod database;
 
 use async_graphql::http::GraphiQLSource;
 use async_graphql_warp::{GraphQLBadRequest, GraphQLResponse};
@@ -18,10 +19,10 @@ extern crate tracing;
 
 #[tokio::main]
 pub async fn main() {
-    let schema = graphql::build_schema();
+    let schema = graphql::schema::build_schema().await;
 
     let graphql_post = async_graphql_warp::graphql(schema).and_then(
-        |(schema, request): (graphql::Schema, async_graphql::Request)| async move {
+        |(schema, request): (graphql::schema::Schema, async_graphql::Request)| async move {
             let resp = schema.execute(request).await;
             Ok::<_, Infallible>(GraphQLResponse::from(resp))
         },
