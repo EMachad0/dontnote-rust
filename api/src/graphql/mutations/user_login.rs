@@ -1,7 +1,8 @@
-use crate::auth::JwksClient;
-use crate::database::Database;
 use entity::user;
 use sea_orm::prelude::*;
+
+use crate::auth::AuthClient;
+use crate::database::Database;
 
 #[derive(Default)]
 pub struct UserLoginMutation;
@@ -15,7 +16,7 @@ impl UserLoginMutation {
         password: String,
     ) -> async_graphql::Result<bool> {
         let db = Database::from_context(ctx);
-        let auth = ctx.data::<JwksClient>()?;
+        let auth = ctx.data::<AuthClient>()?;
         let user: Option<user::Model> = {
             let conn = db.get_connection();
             user::Entity::find()
