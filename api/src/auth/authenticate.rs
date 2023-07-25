@@ -70,7 +70,17 @@ where
 }
 
 #[derive(Debug)]
-pub struct CurrentUser(pub user::Model);
+pub struct CurrentUser(user::Model);
+
+impl CurrentUser {
+    pub fn from_context<'ctx>(ctx: &async_graphql::Context<'ctx>) -> Result<&'ctx Self, AuthError> {
+        ctx.data::<Self>().map_err(|_| AuthError::Unauthenticated)
+    }
+
+    pub fn user(&self) -> &user::Model {
+        &self.0
+    }
+}
 
 #[async_trait]
 impl<S> FromRequestParts<S> for CurrentUser
