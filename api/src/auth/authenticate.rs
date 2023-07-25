@@ -83,7 +83,7 @@ where
         let AuthSubject(subject) = AuthSubject::from_request_parts(parts, _state).await?;
 
         let ctx = parts.extensions.get::<AppContext>().unwrap();
-        let db = &ctx.db;
+        let db = &ctx.database;
 
         let user = {
             let conn = db.get_connection();

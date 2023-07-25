@@ -31,8 +31,11 @@ async fn graphql_handler(
     State(schema): State<Schema>,
     req: GraphQLRequest,
 ) -> GraphQLResponse {
-    debug!("current user {:?}", current_user);
-    schema.execute(req.into_inner()).await.into()
+    let mut req = req.into_inner();
+    if let Some(current_user) = current_user {
+        req = req.data(current_user);
+    }
+    schema.execute(req).await.into()
 }
 
 async fn graphiql() -> impl IntoResponse {

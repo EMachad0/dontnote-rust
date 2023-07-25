@@ -11,6 +11,6 @@ pub async fn build_schema(ctx: &Context) -> Schema {
         MutationRoot::default(),
         SubscriptionRoot::default(),
     )
-    .data(ctx.db.clone())
+    .data(ctx.clone())
     .finish()
 }

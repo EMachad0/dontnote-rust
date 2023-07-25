@@ -5,15 +5,22 @@ use crate::database::Database;
 
 #[derive(Debug, Clone)]
 pub struct Context {
-    pub db: Database,
+    pub database: Database,
     pub auth_client: AuthClient,
 }
 
 impl Context {
     pub async fn from_config(config: &Config) -> Self {
-        let db = Database::new(&config.database.url).await;
+        let database = Database::new(&config.database.url).await;
         let auth_client = AuthClient::new(&config.auth.secret);
 
-        Self { db, auth_client }
+        Self {
+            database,
+            auth_client,
+        }
+    }
+
+    pub fn from_context<'ctx>(ctx: &async_graphql::Context<'ctx>) -> &'ctx Self {
+        ctx.data_unchecked::<Self>()
     }
 }

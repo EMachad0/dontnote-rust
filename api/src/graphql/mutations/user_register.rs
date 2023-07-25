@@ -2,7 +2,7 @@ use entity::user;
 use sea_orm::{ActiveModelTrait, ActiveValue};
 use uuid::Uuid;
 
-use crate::database::Database;
+use crate::context::Context;
 use crate::graphql::types::user::UserType;
 
 #[derive(InputObject)]
@@ -22,9 +22,9 @@ impl UserRegisterMutation {
         ctx: &async_graphql::Context<'_>,
         input: UserInput,
     ) -> async_graphql::Result<UserType> {
-        let db = Database::from_context(ctx);
+        let ctx = Context::from_context(ctx);
         let user: user::Model = {
-            let conn = db.get_connection();
+            let conn = ctx.database.get_connection();
             let active_model = user::ActiveModel {
                 uuid: ActiveValue::Set(Uuid::new_v4().to_string()),
                 name: ActiveValue::Set(input.name),

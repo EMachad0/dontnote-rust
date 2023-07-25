@@ -17,8 +17,4 @@ impl Database {
     pub fn get_connection(&self) -> &DatabaseConnection {
         &self.connection
     }
-
-    pub fn from_context<'ctx>(ctx: &async_graphql::Context<'ctx>) -> &'ctx Self {
-        ctx.data_unchecked::<Self>()
-    }
 }
