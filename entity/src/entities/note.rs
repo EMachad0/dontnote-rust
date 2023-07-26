@@ -12,14 +12,14 @@ pub struct Model {
     pub content: String,
     pub color: String,
     pub workspace_id: i32,
-    pub created_by: i32,
+    pub created_by_id: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
     #[sea_orm(
         belongs_to = "super::user::Entity",
-        from = "Column::CreatedBy",
+        from = "Column::CreatedById",
         to = "super::user::Column::Id",
         on_update = "NoAction",
         on_delete = "Cascade"

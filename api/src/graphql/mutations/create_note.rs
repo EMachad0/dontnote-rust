@@ -44,7 +44,7 @@ impl CreateNoteMutation {
             title: ActiveValue::Set(input.title),
             content: ActiveValue::Set(input.content),
             color: ActiveValue::set(input.color),
-            created_by: ActiveValue::Set(current_user.id),
+            created_by_id: ActiveValue::Set(current_user.id),
             workspace_id: ActiveValue::Set(workspace.id),
             ..Default::default()
         };

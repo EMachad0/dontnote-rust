@@ -44,7 +44,7 @@ impl From<note::Model> for NoteType {
             title: value.title,
             color: value.color,
             content: value.content,
-            created_by_id: value.created_by,
+            created_by_id: value.created_by_id,
         }
     }
 }
