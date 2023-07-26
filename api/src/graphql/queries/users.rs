@@ -13,7 +13,7 @@ pub struct UsersQuery;
 #[Object]
 impl UsersQuery {
     #[graphql(guard = "LoggedUserGuard::default()")]
-    async fn user(&self, ctx: &async_graphql::Context<'_>) -> async_graphql::Result<Vec<UserType>> {
+    async fn users(&self, ctx: &async_graphql::Context<'_>) -> async_graphql::Result<Vec<UserType>> {
         let current_user = CurrentUser::from_context(ctx)?.user();
         let app_ctx = Context::from_context(ctx);
         let conn = app_ctx.database.get_connection();
