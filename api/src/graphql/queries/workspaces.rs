@@ -20,10 +20,7 @@ impl WorkspacesQuery {
         let app_ctx = Context::from_context(ctx);
         let conn = app_ctx.database.get_connection();
         let workspaces: Vec<workspace::Model> = workspace::Entity::find()
-            .join(
-                JoinType::InnerJoin,
-                workspace::Relation::UserWorkspace.def(),
-            )
+            .join(JoinType::Join, workspace::Relation::UserWorkspace.def())
             .filter(user_workspace::Column::UserId.eq(current_user.id))
             .all(conn)
             .await?;

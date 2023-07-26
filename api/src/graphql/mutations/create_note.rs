@@ -30,16 +30,15 @@ impl CreateNoteMutation {
         let current_user = CurrentUser::from_context(ctx)?.user();
         let app_ctx = Context::from_context(ctx);
         let conn = app_ctx.database.get_connection();
+        debug!("finding workspace {:?}", workspace_uuid);
         let workspace = workspace::Entity::find()
-            .join(
-                JoinType::InnerJoin,
-                workspace::Relation::UserWorkspace.def(),
-            )
-            .filter(workspace::Column::Uuid.eq(workspace_uuid))
+            .join(JoinType::Join, workspace::Relation::UserWorkspace.def())
+            .filter(workspace::Column::Uuid.eq(workspace_uuid.to_string()))
             .filter(user_workspace::Column::UserId.eq(current_user.id))
             .one(conn)
             .await?
             .ok_or(GqlError::NotFound)?;
+        debug!("creating note");
         let note = note::ActiveModel {
             uuid: ActiveValue::Set(Uuid::new_v4().to_string()),
             title: ActiveValue::Set(input.title),

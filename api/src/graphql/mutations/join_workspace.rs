@@ -23,7 +23,7 @@ impl JoinWorkspaceMutation {
         let app_ctx = Context::from_context(ctx);
         let conn = app_ctx.database.get_connection();
         let workspace = workspace::Entity::find()
-            .filter(workspace::Column::Uuid.eq(workspace_uuid))
+            .filter(workspace::Column::Uuid.eq(workspace_uuid.to_string()))
             .one(conn)
             .await?
             .ok_or(GqlError::NotFound)?;

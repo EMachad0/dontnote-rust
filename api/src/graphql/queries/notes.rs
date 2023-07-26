@@ -24,7 +24,7 @@ impl NotesQuery {
         let notes: Vec<note::Model> = note::Entity::find()
             .join(JoinType::Join, note::Relation::Workspace.def())
             .join(JoinType::Join, workspace::Relation::UserWorkspace.def())
-            .filter(workspace::Column::Uuid.eq(workspace_uuid))
+            .filter(workspace::Column::Uuid.eq(workspace_uuid.to_string()))
             .filter(user_workspace::Column::UserId.eq(current_user.id))
             .all(conn)
             .await?;
