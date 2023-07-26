@@ -1,6 +1,10 @@
+mod notes;
 mod users;
 mod workspaces;
-mod notes;
 
 #[derive(MergedObject, Default)]
-pub struct QueryRoot(users::UsersQuery, workspaces::WorkspacesQuery);
+pub struct QueryRoot(
+    notes::NotesQuery,
+    users::UsersQuery,
+    workspaces::WorkspacesQuery,
+);
