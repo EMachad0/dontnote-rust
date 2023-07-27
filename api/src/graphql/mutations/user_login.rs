@@ -13,7 +13,7 @@ impl UserLoginMutation {
         gql_ctx: &async_graphql::Context<'_>,
         #[graphql(validator(email))] email: String,
         password: String,
-    ) -> async_graphql::Result<bool> {
+    ) -> async_graphql::Result<String> {
         let ctx = Context::from_context(gql_ctx);
         let user: Option<user::Model> = {
             let conn = ctx.database.get_connection();
@@ -25,8 +25,7 @@ impl UserLoginMutation {
         let user = user.ok_or_else(|| async_graphql::Error::new("Invalid email"))?;
         if user.password == password {
             let token = ctx.auth_client.encode_token(&user);
-            gql_ctx.insert_http_header(crate::auth::HEADER, token);
-            Ok(true)
+            Ok(token)
         } else {
             Err(async_graphql::Error::new("Invalid password"))
         }
