@@ -13,6 +13,7 @@ use axum::{
     routing::get,
     Extension, Router, Server,
 };
+use tower_http::cors::{Any, CorsLayer};
 
 use crate::auth::CurrentUser;
 use crate::context::Context;
@@ -47,11 +48,15 @@ pub async fn main() {
     let config = config::Config::get();
     let ctx = Context::from_config(config).await;
     let schema = graphql::schema::build_schema(&ctx).await;
+    let cors = CorsLayer::new()
+        .allow_headers(Any)
+        .allow_origin(Any);
 
     let app = Router::new()
         .route("/", get(graphiql).post(graphql_handler))
         .with_state(schema)
-        .layer(Extension(ctx));
+        .layer(Extension(ctx))
+        .layer(cors);
 
     #[cfg(debug_assertions)]
     info!("Playground served at http://localhost:8080/");
