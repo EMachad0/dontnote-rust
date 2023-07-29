@@ -59,9 +59,9 @@ pub async fn main() {
         .layer(cors);
 
     #[cfg(debug_assertions)]
-    info!("Playground served at http://localhost:8080/");
+    info!("Playground served at http://localhost:4000/");
 
-    Server::bind(&"127.0.0.1:8080".parse().unwrap())
+    Server::bind(&"127.0.0.1:4000".parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();
